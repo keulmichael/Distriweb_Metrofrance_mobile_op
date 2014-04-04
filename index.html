@@ -1,0 +1,166 @@
+<html>
+<head>
+
+<script type="text/javascript">
+function writediv(texte)
+     {document.getElementById('total').innerHTML = texte;}
+     
+function file(fichier)
+     {
+if(window.ActiveXObject) // IE
+          xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+     else
+
+xhr_object = new XMLHttpRequest();
+     xhr_object.open("GET", fichier, false);
+     xhr_object.send(null);
+     if(xhr_object.readyState == 4) return(xhr_object.responseText);
+     else return(false);
+     }
+
+
+function rechargerPage(edition) {
+document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+var tournee = document.getElementById("tournee").value;
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition='+edition+'&t_choix='+tournee+'&action=commencer&envoi=email'));
+document.getElementById('pic').style.visibility="hidden";}
+
+function voir_tournee(edition) {
+document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+var tournee = document.getElementById("tournee").value;
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition='+edition+'&t_choix=' + tournee + '&action=voir'));
+document.getElementById('pic').style.visibility="hidden";}
+
+function chargement(edition) {
+document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/chargement.php?edition='+edition));
+document.getElementById('pic').style.visibility="hidden";}
+
+function retourIndex(edition) {
+document.getElementById('loader').innerHTML="<img src=''http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition='+edition));
+document.getElementById('pic').style.visibility="hidden";}
+
+function retourCommencer(edition) {
+document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+var tournee = document.getElementById("T").value;
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition='+edition+'&t_choix='+tournee+'&action=commencer'));
+document.getElementById('open_camera_button').style.visibility="hidden";
+document.getElementById('pic').style.visibility="hidden";}
+
+function voir_point(edition,num,tournee) {
+document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+self.setTimeout("writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_record_point.php?edition="+edition+"&num="+num+"&tournee="+tournee+"'));", 3000) ;
+self.setTimeout("document.getElementById('open_camera_button').style.visibility='visible';", 3000) ;
+document.getElementById('pic').style.visibility="visible";}
+
+function affich_photo(edition,num){writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/affich_photo.php?edition='+edition+'&num=' + num));}
+
+function photo(edition,num,Site){writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/photo.php?edition='+edition+'&num='+num+'&site='+Site));}
+
+function refuser(edition,num,T) {
+var motif = document.getElementById("motif").value;
+file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_refuser_point_confirm.php?edition='+edition+'&num='+num+'&motif='+motif);
+self.setTimeout("writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition="+edition+"&t_choix="+T+"&action=commencer'));", 3000) ;
+document.getElementById('pic').style.visibility="hidden";
+document.getElementById('open_camera_button').style.visibility="hidden";}
+
+function record_ok(edition,num){
+var types = document.getElementById("Types").value;
+var Quantite_prevue = document.getElementById("quantite_reelle").value;
+var Site = document.getElementById("Site").value;
+var T = document.getElementById("T").value;
+var retours = document.getElementById("quantite_retours").value;
+
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_record_point_ok.php?edition='+edition+'&num='+num+'&Types='+types+'&Quantite_prevue='+Quantite_prevue+'&t_choix='+T+'&site='+Site+'&retours='+retours));}
+
+function mobile_modif_donnees_reelle(edition,num){
+var site = document.getElementById("site").value;
+var types = document.getElementById("Types").value;
+if (types!='GDR'){var quantite_reelle = document.getElementById("quantite_reelle").value;}
+if (types=='GD'){var presenceGD = document.getElementById("presenceGD").value;}
+var quantite_retours = document.getElementById("quantite_retours").value;
+var horaire_debut = document.getElementById("horaire_debut").value;
+var T = document.getElementById("T").value;
+
+if (quantite_reelle==0 && types!='PRINT'){
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_refuser_point_confirm.php?edition='+edition+'&t_choix='+T+'&num='+num));
+}
+
+else {
+if (navigator.geolocation){
+navigator.geolocation.getCurrentPosition(function(position) {
+file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_modif_donnees_reelle.php?edition='+edition+'&num='+num+'&site='+site+'&Types='+types+'&nouvelle_quantite_reelle='+quantite_reelle+'&nouvelle_quantite_retours='+quantite_retours+'&nouvelle_horaire_debut='+horaire_debut+'&nouvelle_horaire_debut='+horaire_debut+'&PDA_Latitude='+position.coords.latitude+'&PDA_Longitude='+position.coords.longitude+'&presenceGD='+presenceGD),{maximumAge:0, timeout:0}})
+}
+
+else{
+file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_modif_donnees_reelle.php?edition='+edition+'&num='+num+'&site='+site+'&Types='+types+'&nouvelle_quantite_reelle='+quantite_reelle+'&nouvelle_quantite_retours='+quantite_retours+'&nouvelle_horaire_debut='+horaire_debut+'&nouvelle_horaire_debut='+horaire_debut+'&PDA_Latitude=&PDA_Longitude=&presenceGD='+presenceGD);
+}
+document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobile/phonegap/loader.gif'>";
+self.setTimeout("writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition="+edition+"&t_choix="+T+"&action=commencer'));", 3000) ;
+document.getElementById('pic').style.visibility="hidden";
+document.getElementById('open_camera_button').style.visibility="hidden";
+}
+}
+
+function MotifNonLivraison(edition,num,T){
+var motif = document.getElementById("motif").value;
+file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_refuser_point_confirm.php?edition='+edition+'&motif='+motif+'&num='+num);
+writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php?edition='+edition+'&t_choix='+T+'&action=commencer'));
+}
+
+var pullfiles=function(src){
+    // love the query selector
+    var fileInput = src;
+    var files = fileInput.files;
+    // cache files.length
+    var fl=files.length;
+    var i=0;
+ 
+    while ( i < fl) {
+        // localize file var in the loop
+        var file = files[i];
+        alert(file.name);
+        i++;
+    }
+}
+
+function bascule()
+{
+etat=document.getElementById('total').style.visibility;
+document.getElementById('open_camera_button').style.visibility="hidden";
+}
+</script>
+
+        <script src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.1.1.min.js"></script>
+        <script type="text/javascript" src="js/camera.js"></script>
+        
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css">
+        <link rel="stylesheet" href="css/camera.css" type="text/css">
+</head>
+
+<body onload="writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/index.php'));onLoad();bascule()">
+</body>
+
+<div id='total'></div>
+
+<div id='loader'></div>
+
+<div data-role="content">
+                <a href="#" data-role="button" id="open_camera_button">Prendre une photo</a>
+                
+                <div id="settings_info" class="ui-body ui-body-b info"></div>
+</div>
+
+
+
+
+            <div data-role="content">
+                <img id="pic" src="" style="display: none; border: 2px black;"/>
+</div>
+
+
+
+</html> 

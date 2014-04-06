@@ -177,6 +177,11 @@ var edition = document.getElementById("edition").value;
             options.fileName=nomphoto.substr(nomphoto.lastIndexOf('/')+1);
             options.mimeType="image/jpeg";
             options.chunkedMode = false;
+	    
+	    var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+            options.params = params;
             
 var fichierupload = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=normal")
             var ft = new FileTransfer();

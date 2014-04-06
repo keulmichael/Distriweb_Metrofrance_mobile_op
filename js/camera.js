@@ -183,13 +183,13 @@ var edition = document.getElementById("edition").value;
             params.value2 = "param";
             options.params = params;
             
-var fichierupload = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=normal")
-            var ft = new FileTransfer();
-            ft.upload(nomphoto, fichierupload, win, fail, options);alert("normal");
+var fichieruploadNormal = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=normal")
+            var ftNormal = new FileTransfer();
+            ftNormal.upload(nomphoto, fichieruploadNormal, win, fail, options);
 	    
-var fichierupload = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=op")
-            var ft = new FileTransfer();
-            ft.upload(nomphoto, fichierupload, win, fail, options);alert("op");
+var fichieruploadOp = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=op")
+            var ftOp = new FileTransfer();
+            ftOp.upload(nomphoto, fichieruploadOp, win, fail, options);
 
 }
 }

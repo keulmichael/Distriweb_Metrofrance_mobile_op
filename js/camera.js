@@ -61,7 +61,12 @@ function onDeviceReady() {
     $("#open_lib_button").bind ("click", onCapture);
     $("#open_alb_button").bind ("click", onCapture);
     $("#home_button").bind("click", removeTemporaryFiles); 
+    
+    document.addEventListener("online", onOnline, false);
+    document.addEventListener("offline", onOffline, false)
+
 }
+
 
 // Overwrites the default behavior of the device back button
 function onBackPress(e) {
@@ -142,9 +147,26 @@ function onCapture(e) {
 
 // Shows photo captured by camera.getPicture()
 function onCaptureSuccess(imageData) {
-    
+
+         var networkState = navigator.network.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN] = 'Connexion inconnue';
+        states[Connection.ETHERNET] = 'Connexion Ethernet';
+        states[Connection.WIFI] = 'Connexion WiFi';
+        states[Connection.CELL_2G] = 'Connexion 2G';
+        states[Connection.CELL_3G] = 'Connexion 3G';
+        states[Connection.CELL_4G] = 'Connexion 4G';
+        states[Connection.NONE] = 'Pas de connexion réseau';
+
+if (states[networkState] == 'Pas de connexion réseau') {
+        alert('Veuillez reprendre la photo');}
+        
+else
+{
 var num = document.getElementById("num").value;
-    var fichierupload = encodeURI("http://distriweb.metrofrance.com/distriplan/mobile/phonegap/photo.php?num="+num)
+var edition = document.getElementById("edition").value;
+    var fichierupload = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData)
     var photo = getElement("pic");
     photo.style.display = "block";
     photo.src = imageData;
@@ -165,9 +187,51 @@ var num = document.getElementById("num").value;
             var ft = new FileTransfer();
             ft.upload(nomphoto, fichierupload, win, fail, options);
 }
+}
+
+
+
+function recharger_photo() {
+var imageData = document.getElementById("imageData").value;    
+var num = document.getElementById("num").value;
+var edition = document.getElementById("edition").value;
+    var fichierupload = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num)
+    var photo = getElement("pic");
+    photo.style.display = "block";
+    photo.src = imageData;
+    $.mobile.changePage("#result_page", "slideup");
+    var nomphoto = photo.src;	
+
+	    var options = new FileUploadOptions();
+            options.fileKey="photo";
+            options.fileName=nomphoto.substr(nomphoto.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
+            options.chunkedMode = false;
+            
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+            options.params = params;
+
+            var ft = new FileTransfer();
+            ft.upload(nomphoto, fichierupload, win, fail, options);
+            
+         var networkState = navigator.network.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN] = 'Connexion inconnue';
+        states[Connection.ETHERNET] = 'Connexion Ethernet';
+        states[Connection.WIFI] = 'Connexion WiFi';
+        states[Connection.CELL_2G] = 'Connexion 2G';
+        states[Connection.CELL_3G] = 'Connexion 3G';
+        states[Connection.CELL_4G] = 'Connexion 4G';
+        states[Connection.NONE] = 'Pas de connexion réseau';
+
+        alert('Connexion : ' + states[networkState]);
+}
 
 // camera.getPicture() callback function that provides an error message  
-function onCaptureError(message) { }
+function onCaptureError(message) {alert(message);  }
 
 // Reads customized camera options from the settings_form and saves them to the settings object (cameraOptions storage)
 function applySettings() {

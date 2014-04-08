@@ -185,11 +185,11 @@ var edition = document.getElementById("edition").value;
             
 var fichieruploadNormal = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=normal")
             var ftNormal = new FileTransfer();
-            ftNormal.upload(nomphoto, fichieruploadNormal, win, fail, options);alert(fichieruploadNormal);
+            ftNormal.upload(nomphoto, fichieruploadNormal, win, fail, options);
 	    
 var fichieruploadOp = encodeURI("http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/photo.php?edition="+edition+"&num="+num+"&imageData="+imageData+"&type=op")
             var ftOp = new FileTransfer();
-            ftOp.upload(nomphoto, fichieruploadOp, win, fail, options);alert(fichieruploadOp);
+            ftOp.upload(nomphoto, fichieruploadOp, win, fail, options);
 
 }
 }

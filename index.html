@@ -90,7 +90,7 @@ document.getElementById('pic').style.visibility="hidden";}
 
 function voir_point(edition,num,tournee) {
 document.getElementById('loader').innerHTML="<img src='http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/loader.gif'>";
-self.setTimeout("writediv(file('http://distriweb.metrofrance.com/distriplan/mobile/phonegap/mobile_record_point.php?edition="+edition+"&num="+num+"&tournee="+tournee+"'));", 3000) ;
+self.setTimeout("writediv(file('http://distriweb.metrofrance.com/distriplan/mobileOp/phonegap/mobile_record_point.php?edition="+edition+"&num="+num+"&tournee="+tournee+"'));", 3000) ;
 self.setTimeout("document.getElementById('open_camera_button').style.visibility='visible';", 3000) ;
 self.setTimeout("document.getElementById('recharger_photo_button').style.visibility='visible';", 3000) ;
 document.getElementById('pic').style.visibility="visible";}

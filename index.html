@@ -30,7 +30,7 @@ if (navigator.geolocation){
 navigator.geolocation.getCurrentPosition(function(position) {
 lati=Math.round(position.coords.latitude);longi=Math.round(position.coords.longitude);
 if (lati==49 && longi==2 || lati==49 && longi==1 || lati==48 && longi==1 || lati==48 && longi==2  || lati==47 && longi==1 || lati==49 && longi==4){var edition='paris';}
-if (lati==46 && longi==5 || lati==45 && longi==6 || lati==46 && longi==6){var edition='lyon';}
+if (lati==46 && longi==5 || lati==45 && longi==6 || lati==46 && longi==6 || lati==46 && longi==3){var edition='lyon';}
 if (lati==43 && longi==5 || lati==44 && longi==5 || lati==43 && longi==6){var edition='marseille';}
 if (lati==51 && longi==3){var edition='lille';}
 if (lati==44 && longi==1){var edition='toulouse';}
